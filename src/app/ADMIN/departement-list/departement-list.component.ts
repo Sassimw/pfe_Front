@@ -2,6 +2,8 @@ import { Component, OnInit, Output } from '@angular/core';
 import { Departement } from 'src/app/models/departement.model';
 import { ProjectsService } from 'src/app/service/projects/projects.service';
 import { DepartementService } from 'src/app/services/departement.service';
+import { catchError} from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-departement-list',
@@ -16,12 +18,19 @@ export class DepartementListComponent implements OnInit {
   budget: Number = 0 ;
   workload: Number = 0 ;
   crucuality: string ="";
+  TempDeleteProject:any ;
+  TempProject:any ;
 
   constructor(private projectService: ProjectsService) { }
   ngOnInit(): void {
     this.retrieveAll();
   }
-
+  initDeleteModal(project:any){
+    this.TempDeleteProject = project;
+  }
+  initUpdateModal(project:any){
+    this.TempProject = project;
+  }
   retrieveAll(): void {
     this.projectService.getAllProject()
       .subscribe({
@@ -79,6 +88,23 @@ export class DepartementListComponent implements OnInit {
         }
       );
     }
+  }
+
+
+  deleteProject(){
+
+    this.projectService.deleteProject(this.TempDeleteProject).pipe
+    (catchError(error => {
+      console.log(error);
+      this.showmessagesnackbar("Error when deleting team. Please contact administrator");
+      return of();
+  })).subscribe(
+    response => {
+      this.showmessagesnackbar("Team deleted successfully");
+      setTimeout(() => { location.reload(); }, 2000);
+      
+    })
+
   }
 }
 

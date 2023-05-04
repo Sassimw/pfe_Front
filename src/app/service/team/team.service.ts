@@ -20,7 +20,7 @@ export class TeamService {
     };
 
     return this.httpclient.post(this.url + "/add", addteamRequest, httpOptions);
-  }
+  } 
   public showteamdetails():Observable<any>{
     console.log( this.tokenservice.gettoken())
     var httpOptions = {

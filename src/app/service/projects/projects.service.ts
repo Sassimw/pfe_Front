@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectsService {
+export class ProjectsService { 
 
   url: string = "http://localhost:8085/projects";
 
@@ -61,5 +61,15 @@ export class ProjectsService {
     };
 
     return this.httpclient.post(this.url, addProjectRequest, httpOptions);
+  }
+
+  public deleteProject(project:any):Observable<any>{
+    console.log( this.tokenservice.gettoken())
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
+      })
+    };
+    return this.httpclient.delete(this.url+"/deleteprojectid/"+project.id,httpOptions);
   }
 }

@@ -61,7 +61,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h2 class="modal-title" id="exampleModalLabel">Mettre a jour le departement</h2>
+                  <h2 class="modal-title" id="exampleModalLabel">Mettre a jour le projet</h2>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -71,18 +71,41 @@
                     <div class="row mb-4">
                       <div class="col">
                         <div class="form-outline">
-                          <input type="text" id="form6Example1" class="form-control" value={{project.name}} />
-                          <label class="form-label" for="form6Example1">Nom</label>
-                        </div>
-                      </div>
-                      <div class="col">
-                        <div class="form-outline">
-                          <input type="text" id="form6Example2" class="form-control" value={{project.adress}} />
-                          <label class="form-label" for="form6Example2">Prènom</label>
+                          <input type="text" id="form6Example1" class="form-control" [(ngModel)]="TempProject.name"  name="name"/>
+                          <label class="form-label" for="form6Example1">Project Label</label>
                         </div>
                       </div>
                     </div>
-
+                    <div class="row mb-4">
+                      <div class="col">
+                        <div class="form-outline">
+                          <input type="text" id="form6Example2" class="form-control" [(ngModel)]="TempProject.budget"  name="budget"/>
+                          <label class="form-label" for="form6Example2">Initial budget</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-4">
+                      <div class="col">
+                        <div class="form-outline">
+                          <input type="text" id="form6Example2" class="form-control" [(ngModel)]="TempProject.workload" name="workload"/>
+                          <label class="form-label" for="form6Example2">Initial workload</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-4">
+                      <div class="col">
+                        <div class="form-outline">
+                          <select class="form-control" [(ngModel)]="TempProject.criticality" name="crucuality">
+                            <option value="1">High</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Low</option>
+                          </select>
+                          <label class="form-label" for="form6Example2">Crucuality</label>
+                        </div>
+                      </div> 
+                    </div>
+        
+        
                   </form>
 
                 </div>
@@ -114,7 +137,8 @@
                 </div>
                 <div class="modal-footer justify-content-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                  <button type="button" class="btn btn-primary">Confirmer</button>
+                  <button type="button" class="btn btn-primary"
+                  (click)="deleteProject()" >Confirmer</button>
                 </div>
               </div>
             </div>
@@ -124,14 +148,14 @@
 
 
           <button style="width: 7rem;" type="button" class="btn btn-outline-success btn-sm" data-bs-toggle="modal"
-            data-bs-target="#UpdateModal">
+            data-bs-target="#UpdateModal" (click)="initUpdateModal(project)">
             <i class="fas fa-pencil-alt"></i>&nbsp; Modifier
           </button>
           &nbsp;&nbsp;<br />
 
 
           <button style="width: 7rem;" type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
-            data-bs-target="#deletemodal">
+            data-bs-target="#deletemodal" (click)="initDeleteModal(project)">
             <i class="fas fa-trash-alt"></i>&nbsp; Supprimer
           </button>
           &nbsp;&nbsp;<br />
