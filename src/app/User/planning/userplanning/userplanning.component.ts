@@ -1,0 +1,172 @@
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CalendarOptions } from '@fullcalendar/angular'; // useful for typechecking
+import { Observable } from 'rxjs';
+import { PlanningService } from 'src/app/service/planning/planning.service';
+import { ProjectsService } from 'src/app/service/projects/projects.service';
+import { TokenService } from 'src/app/service/token/token.service';
+import { FileService } from 'src/app/services/file/file.service';
+
+@Component({
+  selector: 'app-userplanning',
+  templateUrl: './userplanning.component.html',
+  styleUrls: ['./userplanning.component.css']
+})
+export class UserplanningComponent implements OnInit {
+
+  targetUserId: any = "";
+  newAssignment = {
+    projectId: "1",
+    date: ""
+  }
+
+  tempAssignmentDate: any = "";
+  targetAssignment: any = "";
+  targetProject: any = "";
+
+  userPlanning: any[] = [];
+  projects: any[] = [];
+
+  displayEventModal: boolean = false;
+
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth'
+  };
+  constructor(private planningService: PlanningService, private projectsService: ProjectsService, private route: ActivatedRoute, private fileService: FileService, private tokenService: TokenService) { }
+
+  ngOnInit(): void {
+    this.loadProjects();
+    this.loadUserPlanning();
+    console.log("HAHAH")
+  }
+
+  loadUserPlanning() {
+
+
+    const userId = this.route.snapshot.paramMap.get('id');
+    this.targetUserId = userId;
+    this.planningService.getPlanningForOneUser(userId).subscribe(
+      planning => {
+        console.log(planning);
+        for (var i = 0; i < planning.assignments.length; i++) {
+          var p = planning.assignments[i];
+          if (p.day < 10) {
+            p.day = "0" + p.day
+          }
+          var entry = {
+            title: p.project.name,
+            date: '2022-' + p.month + '-' + p.day,
+            id: JSON.stringify({ assignment: p.id, project: p.project.id }),
+          }
+          this.userPlanning.push(entry);
+        }
+        // this.userPlanning = planning;
+        console.log(this.userPlanning);
+
+        this.calendarOptions = {
+          initialView: 'dayGridMonth',
+          //events: [{ title: 'event 1', date: '2022-11-01' },{ title: 'jemaa', date: '2022-11-24' }]
+          events: this.userPlanning,
+          eventClick: (info) => {
+            this.targetAssignment = JSON.parse(info.event.id).assignment;
+            this.targetProject = JSON.parse(info.event.id).project;
+            this.tempAssignmentDate = info.event.startStr;
+            this.displayEventModal = true;
+            console.log(JSON.parse(info.event.id));
+
+          }
+        };
+
+      }
+    )
+  }
+
+  closeAssignmentModal() {
+    this.displayEventModal = false;
+  }
+
+  loadProjects() {
+    this.projectsService.getAllProject().subscribe(
+      response => {
+        for (let index = 0; index < response.length; index++) {
+          const element = response[index];
+          const project = {
+            id: element.id,
+            name: element.name
+          }
+          this.projects.push(project);
+        }
+      }
+    );
+  }
+
+  addAssignment() {
+    console.log(this.newAssignment)
+    const month = this.newAssignment.date.substr(5, 2);
+    const day = this.newAssignment.date.substr(8, 2);
+    const userId = this.route.snapshot.paramMap.get('id');
+    this.planningService.makeNewAssignment(userId, this.newAssignment.projectId, month, day).subscribe(
+      response => {
+        location.reload();
+      }
+    )
+  }
+
+  handleChange(e: any) {
+    this.newAssignment.projectId = e.target.value
+  }
+
+  handleProjectChange(e: any) {
+    this.newAssignment.projectId = e.target.value
+  }
+
+  deleteAssignment() {
+    var confirmDelete = confirm("Are you sure you want to delete this assignment ?");
+    if (confirmDelete) {
+      this.planningService.deleteAssignment(this.targetAssignment).subscribe(
+        result => {
+          location.reload();
+        }
+      )
+
+    } else {
+      alert("ok cancel.")
+    }
+    this.closeAssignmentModal();
+
+
+  }
+
+  updateAssignment() {
+    this.planningService.updateAssignment(this.targetAssignment, this.newAssignment.projectId).subscribe(
+      result => {
+        location.reload();
+      }
+    )
+  }
+
+  downloadFile() {
+    const userId = this.route.snapshot.paramMap.get('id');
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", 'Bearer ' + this.tokenService.gettoken().toString());
+    var requestOptions = {
+      headers: myHeaders
+    };
+
+    fetch("http://localhost:8085/planning/" + userId + "/download-planning", requestOptions)
+      .then((res) => { return res.blob(); })
+      .then((data) => {
+        var a = document.createElement("a");
+        a.href = window.URL.createObjectURL(data);
+        a.download = "planning.csv";
+        a.click();
+      });
+  }
+
+
+
+
+
+}

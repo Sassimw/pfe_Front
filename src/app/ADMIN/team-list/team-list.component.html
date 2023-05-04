@@ -1,0 +1,161 @@
+<div class="addnew">
+  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#AddModal">
+    <i class="fa-solid fa-circle-plus"></i>&nbsp; Create a Team
+  </button>
+  &nbsp;&nbsp;
+</div>
+
+<div class="container">
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+
+        <th>Team Name</th>
+
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of teams">
+
+        <td>{{team.name}}</td>
+
+        <td>
+          <!-- boutons action-->
+
+
+          <!-- Update Modal -->
+          <div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h2 class="modal-title" id="exampleModalLabel">Modify Team</h2>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    <div class="row mb-4">
+                      <div class="col">
+                        <div class="form-outline">
+                          <label class="form-label" for="form6Example1">Name</label>
+                          <input name="teamUpdateName" [(ngModel)]="TempTeam.name" type="text" id="form6Example1"
+                            class="form-control" />
+                        </div>
+                      </div>
+
+
+                    </div>
+
+
+                    <!-- Text input -->
+
+                  </form>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="confirmUpdate()">Confirme</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <!-- Modal HTML -->
+          <div id="deletemodal" class="modal fade">
+            <div class="modal-dialog modal-confirm">
+              <div class="modal-content">
+                <div class="modal-header flex-column">
+                  <div class="icon-box">
+                    <i class="material-icons">&#xE5CD;</i>
+                  </div>
+                  <h4 class="modal-title w-100">Are you sure?</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <p>You really want to delete this ?There is no rollback.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="deleteTeam()">Confirm</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#UpdateModal"
+            (click)="initUpdateModal(team)">
+            <i class="fas fa-pencil-alt"></i>&nbsp; Modify
+          </button>
+          &nbsp;&nbsp;
+
+
+          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deletemodal"
+            (click)="initDeleteModal(team)">
+            <i class="fas fa-trash-alt"></i>&nbsp; Delete
+          </button>
+          &nbsp;&nbsp;
+          <button type="button" class=" btn btn-outline-secondary" (click)="listMembers(team)">
+            <i class="far fa-list-alt"></i>&nbsp; View members
+          </button>
+          &nbsp;
+      </tr>
+    </tbody>
+
+  </table>
+
+
+  <!-- ADD Modal -->
+  <div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Add a Team</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div> 
+        <div class="modal-body">
+
+          <form>
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <label class="form-label" for="form6Example1">Name</label>
+                  <input type="text" id="form6Example1" class="form-control" name="name" [(ngModel)]="name" />
+
+                </div>
+              </div>
+
+
+            </div>
+
+
+            <!-- Text input -->
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="addteam()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
+        </div>
+        <div id="snackbar">{{message}}</div>
+      </div>
+    </div>
+   
+  </div>
+
+
+
+
+
+
+</div>

@@ -1,0 +1,38 @@
+.test {
+  width: 13cm;
+  display: block;
+  margin: 2cm;
+}
+
+.hello {
+  width: 13cm;
+  display: block;
+  margin: 2cm;
+  margin-top: -1cm;
+}
+
+.table {
+  align-items: center;
+}
+
+.container {
+  display: flex;
+}
+
+.item {
+  background: #ce8888;
+  flex-basis: 100px;
+  height: 100px;
+  margin: 5px;
+  margin-top: 1 cm;
+}
+
+h2 {
+  text-align: center;
+  color: #57E501;
+}
+
+.square-graph-frame {
+  height: 8rem;
+  width: 15rem;
+}

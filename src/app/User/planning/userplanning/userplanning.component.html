@@ -1,0 +1,89 @@
+<div class="row mb-4">
+    <div class="col">
+        <div class="form-outline">
+            <div class="addnew">
+                    <button style="    margin-left: 1%;float: right;" type="button" class="btn btn-outline-secondary" (click)="downloadFile()">
+                        <i class="fa-solid fa-arrow-circle-down"></i>&nbsp; Download planning
+                    </button>
+                <button style="float: right;" type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                    data-bs-target="#AddModal">
+                    <i class="fa-solid fa-circle-plus"></i>&nbsp; Add assignment
+                </button>
+                &nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+<full-calendar [options]="calendarOptions"></full-calendar>
+
+<!-- ADD Modal -->
+<div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Add a Team</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="form-label" for="form6Example1">Project</label>
+                                <select class="form-control" (change)="handleChange($event)">
+                                    <option *ngFor="let project of projects" [value]="project.id">{{project.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-outline">
+                                <label class="form-label" for="form6Example1">Date</label>
+                                <input type="date" id="form6Example1" class="form-control" name="date"
+                                    [(ngModel)]="newAssignment.date" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Text input -->
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button (click)="addAssignment()" type="button" class="btn btn-primary"
+                    data-bs-dismiss="modal">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deletemodal" class="modal " style="display: block;" *ngIf="displayEventModal === true">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header flex-column">
+                <h4 class="modal-title w-100">{{tempAssignmentDate}}</h4>
+            </div>
+            <div class="modal-body">
+                <select class="form-control" (change)="handleProjectChange($event)">
+                    <option [attr.selected]="project.id === targetProject ? true : null"
+                        *ngFor="let project of projects" [value]="project.id">{{project.name}}
+                    </option>
+                </select>
+            </div>
+            <div class="modal-footer justify-content-center">
+
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="updateAssignment()">Update assignment</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteAssignment()">Delete
+                    assignment</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="closeAssignmentModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

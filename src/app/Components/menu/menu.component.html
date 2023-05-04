@@ -1,0 +1,15 @@
+<div class="list-group min-height-600" id="list-tab" role="tablist">
+<div class="row" *ngFor="let menu of menuProp">
+      <table>
+      <tr class="list-group-item">
+      <td class="icons"><i style="transform: translateY(10px)" class="{{menu.icon }} test"></i>&nbsp;</td>
+      <td class="list"><a class=" list-group-item-action " id="list-home-list" data-toggle="list" href="{{ menu.url }}" role="tab" aria-controls="home">{{ menu.titre }}</a></td>
+    </tr> 
+    </table>
+    
+  
+  </div>  
+
+</div>
+
+

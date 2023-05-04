@@ -1,0 +1,73 @@
+<div>
+    <a [routerLink]="['/team-members', user.team.id]">
+        <p style="padding: 1%;
+        border-radius: 32px;
+        text-align: center;
+        background: #dee2e6;
+        cursor: pointer;
+        width: fit-content;
+        margin: 1% 0% 0% 5%;">
+            <img src="assets/back-arrow.png" class="img-fluid " style="width: 2rem">
+            <button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-log-out"></span> Back to team
+            </button>
+        </p>
+    </a>
+</div>
+<div class="container mycontainer" style="padding: 2%;
+width: 50%;
+margin-top: 2%;">
+
+    <div class="mb-3">
+        <span>MATRICULE</span>
+        <input type="text" name="matcle" [value]="user.matcle" class="form-control" placeholder="E-mail" disabled>
+    </div>
+
+    <div class="mb-3">
+        <span>First name</span>
+        <input type="text" name="firstname" [value]="user.firstname" class="form-control" placeholder="E-mail" disabled>
+    </div>
+
+    <div class="mb-3">
+        <span>Last name</span>
+        <input type="text" name="lastname" [value]="user.lastname" class="form-control" placeholder="E-mail" disabled>
+    </div>
+
+    <div class="mb-3">
+        <span>Speciality</span>
+        <input type="text" name="speciality" [value]="user.speciality" class="form-control" placeholder="E-mail"
+            disabled>
+    </div>
+
+    
+    <div class="mb-3">
+        <span>Team</span>
+        <input type="text" name="team" [value]="user.team.name" class="form-control" placeholder="E-mail"
+            disabled>
+    </div>
+
+    <div class="mb-3">
+        <span>Hierarchical manager</span>
+        <input type="text" name="team" [value]="manager.firstname + ' ' + manager.lastname" class="form-control" placeholder="E-mail"
+            disabled>
+    </div>
+
+    
+
+    <div class="row">
+        <div class="col-md-6">
+            <span>Number of projects</span>
+            <input type="text" name="nbrOfProjectsOfUser" [value]="user.nbrOfProjectsOfUser" class="form-control"
+                placeholder="E-mail" disabled>
+        </div>
+
+        <div class="col-md-6">
+            <span>Score (global)</span>
+            <input type="text" name="globalUserScore" [value]="user.globalUserScore" class="form-control"
+                placeholder="E-mail" disabled>
+        </div>
+
+    </div>
+
+
+</div>

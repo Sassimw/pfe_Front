@@ -1,0 +1,26 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+
+body{
+
+    background-color: #eff2f5 !important;
+}
+
+.background-grey{
+    background-color: #eff2f5 !important;
+}
+
+.border-none{
+    border : none !important;
+}
+
+.min-height-60{
+    min-height: 60px;
+}
+html, body {
+    min-height: 100%;
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
