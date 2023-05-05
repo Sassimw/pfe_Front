@@ -41,6 +41,7 @@ export class PersonsListComponent implements OnInit {
 
           var user = {
             "id": response[i].id,
+            "matcle": response[i].matcle,
             "firstName": response[i].firstname,
             "lastName": response[i].lastname,
             "speciality": response[i].speciality,

@@ -71,7 +71,7 @@
                     <div class="row mb-4">
                       <div class="col">
                         <div class="form-outline">
-                          <input type="text" id="form6Example1" class="form-control" [(ngModel)]="TempProject.name"  name="name"/>
+                          <input type="text" id="form6Example1" class="form-control" value={{project.name}}  name="name"/>
                           <label class="form-label" for="form6Example1">Project Label</label>
                         </div>
                       </div>
@@ -79,7 +79,7 @@
                     <div class="row mb-4">
                       <div class="col">
                         <div class="form-outline">
-                          <input type="text" id="form6Example2" class="form-control" [(ngModel)]="TempProject.budget"  name="budget"/>
+                          <input type="text" id="form6Example2" class="form-control" value={{project.budget}} name="budget"/>
                           <label class="form-label" for="form6Example2">Initial budget</label>
                         </div>
                       </div>
@@ -87,7 +87,7 @@
                     <div class="row mb-4">
                       <div class="col">
                         <div class="form-outline">
-                          <input type="text" id="form6Example2" class="form-control" [(ngModel)]="TempProject.workload" name="workload"/>
+                          <input type="text" id="form6Example2" class="form-control" value={{project.workload}} name="workload"/>
                           <label class="form-label" for="form6Example2">Initial workload</label>
                         </div>
                       </div>
@@ -95,7 +95,7 @@
                     <div class="row mb-4">
                       <div class="col">
                         <div class="form-outline">
-                          <select class="form-control" [(ngModel)]="TempProject.criticality" name="crucuality">
+                          <select class="form-control"  value={{project.criticality}} name="crucuality">
                             <option value="1">High</option>
                             <option value="2">Medium</option>
                             <option value="3">Low</option>

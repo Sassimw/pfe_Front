@@ -2,6 +2,7 @@ import { Team } from "./team.model";
 
 export class Person {
 id?:any;
+matcle?:any;
 firstName?:any;
 lastName?:any;
 email?:any;

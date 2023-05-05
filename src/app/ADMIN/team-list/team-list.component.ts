@@ -110,7 +110,7 @@ export class TeamListComponent implements OnInit {
       console.log(error);
       this.showmessagesnackbar("Error when deleting team. Please contact administrator");
       return of();
-  })).subscribe(
+     })).subscribe(
     response => {
       this.showmessagesnackbar("Team deleted successfully");
       setTimeout(() => { location.reload(); }, 2000);

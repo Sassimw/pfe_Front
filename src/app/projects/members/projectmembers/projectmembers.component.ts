@@ -87,8 +87,9 @@ export class ProjectmembersComponent implements OnInit {
       this.showmessagesnackbar("Please enter the desired date.")
     } else {
       const projectId = this.route.snapshot.paramMap.get('id');
+      console.log("wijden projectId " + projectId) ; 
       var date = this.searchData.date.toString(); //2022-11-25
-
+      console.log("wijden date " + date) ; 
       this.projectService.requestResource(userId, projectId, date.substr(0, 4), date.substr(5, 2), date.substr(8, 2))
         .subscribe(result => {
           alert(result.message);
