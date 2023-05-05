@@ -29,6 +29,7 @@ export class PlanningService {
         'Authorization': 'Bearer ' + this.tokenservice.gettoken().toString()
       })
     };
+    console.log("wijden project id " + projectid ) ;
     return this.httpclient.post(this.url + "/add?userid=" + userid + "&projectid=" + projectid + "&month=" + month + "&day=" + day, null, httpOptions);
   }
 

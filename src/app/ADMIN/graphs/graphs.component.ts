@@ -113,7 +113,7 @@ export class GraphsComponent implements OnInit {
               '#f1c40f',
               '#e74c3c',
             ],
-            data: [11, 5, 8, 3],
+            data: [11, 5, 9, 3],
           },
         ],
       },
