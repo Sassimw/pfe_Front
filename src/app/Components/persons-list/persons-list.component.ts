@@ -4,9 +4,11 @@ import { Person } from 'src/app/models/person.model';
 import { PersonService } from 'src/app/services/person.service';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserService } from 'src/app/service/user/user.service';
+import { Router } from '@angular/router';
 
-import { catchError } from 'rxjs/operators';
+import { catchError, last } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { TeamService } from 'src/app/service/team/team.service';
 
 @Component({
   selector: 'app-persons-list',
@@ -18,10 +20,28 @@ export class PersonsListComponent implements OnInit {
 
   persons?: any[] = [];
   user: any;
-  constructor(private personService: PersonService, private userservice: UserService) { }
+  teams?: any[] = [];
+  TempUpdatePerson: any = {
+    firstname:"",
+    lastname:"",
+    email:""
+  }
+  TempDeletePerson: any = {
+    name: ""
+  }
+  temmUpdatebasicinfo:any = {
+    firstname:"",
+    lastname:"",
+    email:""
+  }
+  TempTeam:any = {
+    name:""
+  }
+  constructor(private personService: PersonService, private userservice: UserService,private teamsService : TeamService, private router: Router) { }
   ngOnInit(): void {
     // this.retrieveAll();
-    this.showallteams();
+    this.showallUsers();
+    this.getAllTeams();
   }
   retrieveAll(): void {
     this.personService.getAll()
@@ -34,13 +54,39 @@ export class PersonsListComponent implements OnInit {
       });
 
   }
-  public showallteams() {
+  public getAllTeams(){
+    this.teamsService.showteamdetails().subscribe(
+      (response: string | any[]): void => {
+        for (var i = 0; i < response.length; i++) {
+
+          var team = {
+            "id": response[i].id,
+            "name": response[i].name,
+            "manager": response[i].manager
+          }
+
+          this.teams?.push(team);
+
+        }
+        console.log(this.teams);
+
+
+      }
+    )
+  }
+  handleChangeTeam(e: any) {
+    console.log("wijden handlechange " + e.target.value )
+    this.TempUpdatePerson.team = e.target.value;
+    console.log("wijden this.newAssignment.teams " + this.TempUpdatePerson.team ) ; 
+  }
+  public showallUsers() {
     this.userservice.showalluser().subscribe(
       (response: string | any[]): void => {
         for (var i = 0; i < response.length; i++) {
 
           var user = {
             "id": response[i].id,
+            "email": response[i].email,
             "matcle": response[i].matcle,
             "firstName": response[i].firstname,
             "lastName": response[i].lastname,
@@ -71,30 +117,38 @@ export class PersonsListComponent implements OnInit {
   }
 
 
-  TempUpdatePerson: any = {
-    name: ""
-  }
-  TempDeletePerson: any = {
-    name: ""
-  }
+
   initUpdateModal(person: any) {
-    this.TempUpdatePerson = person;
+    this.temmUpdatebasicinfo.firstname = person.firstName;
+    this.temmUpdatebasicinfo.lastname = person.lastName;
+    this.temmUpdatebasicinfo.email = person.email;
+    console.log("************************** ");
+    console.log("wijden initUpdateModal ");
+    console.log(person);
+    console.log("************************** ");
   }
 
   initDeleteModal(person: any) {
     this.TempDeletePerson = person;
   }
+  getUserData(id : any){
+    this.TempUpdatePerson = this.persons?.find(x => x.id == id);
+    console.log(this.TempUpdatePerson) ;
+  }
 
-
-  confirmUpdate() {
-    this.userservice.updateUser(this.TempUpdatePerson).pipe
+  confirmUpdate(id:any) {
+   this.userservice.updateUser(id,this.temmUpdatebasicinfo.firstname,this.temmUpdatebasicinfo.lastname,this.temmUpdatebasicinfo.email).pipe
       (catchError(error => {
         console.log(error);
         this.showmessagesnackbar("Error when updating user. Please contact administrator");
         return of();
       })).subscribe(
         response => {
+          /*this.persons?.find(x => x.id == id).email==this.temmUpdatebasicinfo.email;
+          this.persons?.find(x => x.id == id).firstName==this.temmUpdatebasicinfo.email;
+          this.persons?.find(x => x.id == id).lastName==this.temmUpdatebasicinfo.email;*/
           this.showmessagesnackbar("User updated successfully");
+          setTimeout(() => { location.reload(); }, 2000);
         })
   }
 

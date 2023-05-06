@@ -10,6 +10,7 @@
 
         <th>Nom</th>
         <th>prenom</th>
+        <th>Email</th>
         <th>Matcle</th>
         <th>Speciality</th>
         <th>Projects</th>
@@ -24,6 +25,7 @@
 
         <td>{{person.lastName}}</td>
         <td>{{person.firstName}}</td>
+        <td>{{person.email}}</td>
         <td>{{person.matcle}}</td>
         <td>{{person.speciality}}</td>
         <td>{{person.nbrOfProjectsOfUser}}</td>
@@ -43,19 +45,18 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                   <form>
                     <!-- 2 column grid layout with text inputs for the first and last names -->
                     <div class="row mb-4">
                       <div class="col">
                         <div class="form-outline">
-                          <input type="text" id="form6Example1" class="form-control" value={{person.firstName}} />
+                          <input type="text" id="form6Exavvbggmple1" class="form-control" name="firstname"  [(ngModel)]="temmUpdatebasicinfo.firstname" />
                           <label class="form-label" for="form6Example1">FirstName</label>
                         </div>
                       </div>
                       <div class="col">
                         <div class="form-outline">
-                          <input type="text" id="form6Example2" class="form-control" value={{person.lastName}} />
+                          <input type="text" id="form6Example2" class="form-control" name="lastname" [(ngModel)]="temmUpdatebasicinfo.lastname"   />
                           <label class="form-label" for="form6Example2">LastName</label>
                         </div>
                       </div>
@@ -63,45 +64,40 @@
 
                     <!-- Text input -->
                     <div class="form-outline mb-4">
-                      <input type="text" id="form6Example3" class="form-control" value={{person.email}} />
-                      <label class="form-label" for="form6Example3">speciality</label>
+                      <input type="text" id="form6Example3" class="form-control" name="email" [(ngModel)]="temmUpdatebasicinfo.email"  />
+                      <label class="form-label" for="form6Example3">Email</label>
                     </div>
+                    
 
-                    <!-- Text input -->
+                    <!-- 
                     <div class="form-outline mb-4">
-                      <input type="tel" id="form6Example4" class="form-control" value={{person.phoneNumber}} />
-                      <label class="form-label" for="form6Example4">nbrOfProjectsOfUser</label>
+                      <select type="text" id="form6Example5" class="form-control"  (change)="handleChangeTeam($event)">
+                        <option value="" disabled selected>Choose a teams</option>
+                        <option 
+                        *ngFor="let team of teams" [value]="team.id">{{team.name}}
+                        </option>
+                      </select>
+                      <label class="form-label" for="form6Example5">Equipe</label>
                     </div>
+                    -->
 
-
-                    <!-- Number input -->
-                    <div class="form-outline mb-4">
-                      <input type="number" id="form6Example6" class="form-control" />
-                      <label class="form-label" for="form6Example6">matricule</label>
-                    </div>
-
-                    <!-- Text input -->
-                    <div class="form-outline mb-4">
-                      <input type="text" id="form6Example4" class="form-control" />
-                      <label class="form-label" for="form6Example4">equipe</label>
-                    </div>
-
-                    <!-- Text input -->
+                    <!--  
                     <div class="form-outline mb-4">
                       <select type="text" id="form6Example4" class="form-control">
+                        <option value="" disabled selected>Choose a role</option>
                         <option value="MEMBRE">MEMBRE</option>
                         <option value="ADMIN">ADMIN</option>
                         <option value="APPROBATEUR">APPROBATEUR</option>
 
                       </select>
                       <label class="form-label" for="form6Example4">Role</label>
-                    </div>
+                    </div>-->
                   </form>
 
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Confirm</button>
+                  <button type="button" (click)="confirmUpdate(person.id)" class="btn btn-primary">Confirm</button>
                 </div>
               </div>
             </div>
@@ -136,7 +132,7 @@
 
 
 
-          <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#UpdateModal">
+          <button type="button" (click)="initUpdateModal(person)" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#UpdateModal">
             <i class="fas fa-pencil-alt"></i>&nbsp; Modifier
           </button>
           &nbsp;&nbsp;
@@ -148,12 +144,14 @@
           &nbsp;&nbsp;
 
           <a [routerLink]="['/user-planning', person.id]" >
-    <button type=" button" class=" btn btn-outline-secondary">
+          <button type=" button" class=" btn btn-outline-secondary">
             <i class="far fa-list-alt"></i>&nbsp; Planning
             </button>
           </a>
 
           &nbsp;
+        </td> 
+
       </tr>
     </tbody>
 

@@ -24,14 +24,16 @@ export class UserService {
     return this.httpclient.get(this.url+"/AllUsers",httpOptions);
   }
 
-  public updateUser(team:any):Observable<any>{
+  public updateUser(id:any,firstname:any,lastname:any,email:any):Observable<any>{
     console.log( this.tokenservice.gettoken())
     var httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
       })
     };
-    return this.httpclient.put(this.url+"/updateteamid",team,httpOptions);
+    var completeurl=this.url+"/UpdateUser?userid="+id+"&firstname="+firstname+
+    "&lastname="+lastname+"&email="+email;
+    return this.httpclient.post(completeurl,null,httpOptions);
   }
 
   public deleteUser(team:any):Observable<any>{
