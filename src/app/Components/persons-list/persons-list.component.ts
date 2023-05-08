@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { catchError, last } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { TeamService } from 'src/app/service/team/team.service';
+import { Team } from 'src/app/models/team.model';
 
 @Component({
   selector: 'app-persons-list',
@@ -20,6 +21,8 @@ export class PersonsListComponent implements OnInit {
 
   persons?: any[] = [];
   user: any;
+  teamID: any; 
+  team: any; 
   teams?: any[] = [];
   TempUpdatePerson: any = {
     firstname:"",
@@ -74,16 +77,23 @@ export class PersonsListComponent implements OnInit {
       }
     )
   }
+
   handleChangeTeam(e: any) {
     console.log("wijden handlechange " + e.target.value )
-    this.TempUpdatePerson.team = e.target.value;
-    console.log("wijden this.newAssignment.teams " + this.TempUpdatePerson.team ) ; 
+    this.teamID = e.target.value;
+    console.log("wijden this.newAssignment.teams " + this.teamID ) ; 
   }
   public showallUsers() {
     this.userservice.showalluser().subscribe(
       (response: string | any[]): void => {
+ 
         for (var i = 0; i < response.length; i++) {
-
+          console.log (i);
+          var teamnname;
+           if (response[i].team === null )
+             teamnname="No team";
+            else
+              teamnname = response[i].team.name ; 
           var user = {
             "id": response[i].id,
             "email": response[i].email,
@@ -94,17 +104,23 @@ export class PersonsListComponent implements OnInit {
             "nbrOfProjectsOfUser": response[i].nbrOfProjectsOfUser,
             "globalUserScore": response[i].globalUserScore,
             "userglobalscoreperproject": response[i].userglobalscoreperproject,
-            "numberofuserprojects": response[i].numberofuserprojects
+            "numberofuserprojects": response[i].numberofuserprojects,
+            "teamname" : teamnname
           }
-
+ 
           this.persons?.push(user);
 
         }
-        console.log(this.persons);
-
-
+ 
       }
     )
+  }
+
+  public getTeambyid(id: any) {
+    this.userservice.getTeam(id).subscribe( (data : any) =>{
+      console.log("wijden team getTeambyid" + data.name )
+    }
+    );
   }
 
   x: any;
@@ -130,6 +146,8 @@ export class PersonsListComponent implements OnInit {
 
   initDeleteModal(person: any) {
     this.TempDeletePerson = person;
+    console.log("************************** ");
+    console.log(this.TempDeletePerson) ;
   }
   getUserData(id : any){
     this.TempUpdatePerson = this.persons?.find(x => x.id == id);
@@ -152,6 +170,19 @@ export class PersonsListComponent implements OnInit {
         })
   }
 
+  ChangeTeam(idPerson:any) {
+    this.userservice.updateUserTeam(idPerson,this.teamID).pipe
+       (catchError(error => {
+         console.log(error);
+         this.showmessagesnackbar("Error when updating user. Please contact administrator");
+         return of();
+       })).subscribe(
+         response => {
+           this.showmessagesnackbar("Team changed successfully");
+           setTimeout(() => { location.reload(); }, 2000);
+         })
+   }
+
   deleteTeam() {
 
     this.userservice.deleteUser(this.TempDeletePerson).pipe
@@ -165,6 +196,22 @@ export class PersonsListComponent implements OnInit {
           setTimeout(() => { location.reload(); }, 2000);
 
         })
+
+  }
+
+  deleteUser(){
+
+    this.userservice.deleteUser(this.TempDeletePerson).pipe
+    (catchError(error => {
+      console.log(error);
+      this.showmessagesnackbar("Error when deleting team. Please contact administrator");
+      return of();
+     })).subscribe(
+    response => {
+      this.showmessagesnackbar("Team deleted successfully");
+      setTimeout(() => { location.reload(); }, 2000);
+      
+    })
 
   }
 

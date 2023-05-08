@@ -8,15 +8,13 @@
     <thead>
       <tr>
 
-        <th>Nom</th>
-        <th>prenom</th>
+        <th>Name</th>
+        <th>Last name</th>
         <th>Email</th>
         <th>Matcle</th>
-        <th>Speciality</th>
-        <th>Projects</th>
-        <th>globalScore</th>
-
-        <th>numberofuserprojects</th>
+        <th># Projects</th>
+        <th>Team</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -27,11 +25,8 @@
         <td>{{person.firstName}}</td>
         <td>{{person.email}}</td>
         <td>{{person.matcle}}</td>
-        <td>{{person.speciality}}</td>
-        <td>{{person.nbrOfProjectsOfUser}}</td>
-        <td>{{person.globalUserScore}}</td>
-
-        <td> {{person.numberofuserprojects}}</td>
+        <td>{{person.numberofuserprojects}}</td>
+        <td>{{person.teamname}}</td>
         <td>
           <!-- boutons action-->
 
@@ -41,7 +36,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h2 class="modal-title" id="exampleModalLabel">Mettre a jour l'utilisateur</h2>
+                  <h2 class="modal-title" id="exampleModalLabel">Modify User</h2>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -104,6 +99,38 @@
           </div>
 
 
+<!-- Update Modal -->
+<div class="modal fade" id="addtoteam" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLabel">Add user to a team</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          
+       
+          <div class="form-outline mb-4">
+            <select type="text" id="form6Example5" class="form-control"  (change)="handleChangeTeam($event)">
+              <option value="" disabled selected>Choose a team</option>
+              <option 
+              *ngFor="let team of teams" [value]="team.id">{{team.name}}
+              </option>
+            </select>
+          </div>
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" (click)="ChangeTeam(person.id)" class="btn btn-primary">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -123,33 +150,47 @@
                 </div>
                 <div class="modal-footer justify-content-center">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                  <button type="button" class="btn btn-primary">Confirm</button>
+                  <button (click)="deleteUser()" type="button" class="btn btn-primary">Confirm</button>
                 </div>
               </div>
             </div>
           </div>
 
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <button type="button" (click)="initUpdateModal(person)" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addtoteam">
+                    <i class="fa-solid fa-people-group"></i>&nbsp; Change team
+                  </button>
+                  &nbsp;&nbsp;
+                </td>
+                <td>
+                  <button type="button" (click)="initUpdateModal(person)" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#UpdateModal">
+                    <i class="fas fa-pencil-alt"></i>&nbsp; Modify
+                  </button>
+                  &nbsp;&nbsp;
+                </td>
+                <td>
+                  <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deletemodal"
+                  (click)="initDeleteModal(person)" >
+                    <i class="fas fa-trash-alt"></i>&nbsp; Delete
+                  </button>
+                  &nbsp;&nbsp;
+                </td>
+                <td>
+                  <a [routerLink]="['/user-planning', person.id]" >
+                  <button type=" button" class=" btn btn-outline-secondary">
+                    <i class="far fa-list-alt"></i>&nbsp; Planning
+                    </button>
+                  </a>
 
+                  &nbsp;
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-
-          <button type="button" (click)="initUpdateModal(person)" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#UpdateModal">
-            <i class="fas fa-pencil-alt"></i>&nbsp; Modifier
-          </button>
-          &nbsp;&nbsp;
-
-
-          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deletemodal">
-            <i class="fas fa-trash-alt"></i>&nbsp; Supprimer
-          </button>
-          &nbsp;&nbsp;
-
-          <a [routerLink]="['/user-planning', person.id]" >
-          <button type=" button" class=" btn btn-outline-secondary">
-            <i class="far fa-list-alt"></i>&nbsp; Planning
-            </button>
-          </a>
-
-          &nbsp;
         </td> 
 
       </tr>

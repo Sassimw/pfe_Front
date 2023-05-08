@@ -36,15 +36,7 @@ export class UserService {
     return this.httpclient.post(completeurl,null,httpOptions);
   }
 
-  public deleteUser(team:any):Observable<any>{
-    console.log( this.tokenservice.gettoken())
-    var httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
-      })
-    };
-    return this.httpclient.delete(this.url+"/deleteteamid/"+team.id,httpOptions);
-  }
+
 
   public loadUserDetails(userId:any):Observable<any>{
     var httpOptions = {
@@ -53,6 +45,38 @@ export class UserService {
       })
     };
     return this.httpclient.get(this.url+"/"+userId+"/details",httpOptions);
+  }
+
+  public updateUserTeam(idPerson:any,idTeamany:any){
+    console.log( this.tokenservice.gettoken())
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
+      })
+    };
+    var completeurl=this.url+"/Updateteam?userid="+idPerson+"&teamid="+idTeamany;
+    return this.httpclient.post(completeurl,null,httpOptions);
+  }
+
+  public getTeam(idPerson:any){  
+    console.log( "wijden token " + this.tokenservice.gettoken())
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
+      })
+    };
+    
+    return this.httpclient.get(this.url+"/team/"+idPerson);
+  }
+
+  public deleteUser(user:any):Observable<any>{
+    console.log( this.tokenservice.gettoken())
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
+      })
+    };
+    return this.httpclient.delete(this.url+"/deleteuser/"+user.id,httpOptions);
   }
 
 }
