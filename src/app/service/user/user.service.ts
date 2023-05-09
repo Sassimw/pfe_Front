@@ -13,6 +13,7 @@ export class UserService {
   url: string = "http://localhost:8085/user";
 
   constructor(private httpclient: HttpClient, private tokenservice: TokenService) { }
+  
   public showalluser():Observable<any>{
     console.log( this.tokenservice.gettoken())
     var httpOptions = {
@@ -20,7 +21,6 @@ export class UserService {
         'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
       })
     };
-    
     return this.httpclient.get(this.url+"/AllUsers",httpOptions);
   }
 

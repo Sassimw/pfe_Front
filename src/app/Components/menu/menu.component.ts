@@ -27,7 +27,6 @@ export class MenuComponent implements OnInit {
     titre: 'Users management',
     icon: 'fa-solid fa-users',
     url: 'persons'
-
   },
   {
     id: '4',

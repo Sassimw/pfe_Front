@@ -7,6 +7,9 @@ import { PlanningService } from 'src/app/service/planning/planning.service';
 import { ProjectsService } from 'src/app/service/projects/projects.service';
 import { TokenService } from 'src/app/service/token/token.service';
 import { FileService } from 'src/app/services/file/file.service';
+import { catchError, last } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-userplanning',
@@ -33,7 +36,7 @@ export class UserplanningComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth'
   };
-  constructor(private planningService: PlanningService, private projectsService: ProjectsService, private route: ActivatedRoute, private fileService: FileService, private tokenService: TokenService) { }
+  constructor(private planningService: PlanningService, private projectsService: ProjectsService, private route: ActivatedRoute, private fileService: FileService, private tokenService: TokenService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadProjects();
@@ -43,7 +46,24 @@ export class UserplanningComponent implements OnInit {
   loadUserPlanning() {
     const userId = this.route.snapshot.paramMap.get('id');
     this.targetUserId = userId;
-    this.planningService.getPlanningForOneUser(userId).subscribe(
+    this.planningService.getPlanningForOneUser(userId).pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+       
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+       {
+   
+        return of();
+      }
+       
+ 
+    })).subscribe(
       planning => {
         console.log(planning);
         for (var i = 0; i < planning.assignments.length; i++) {
@@ -87,7 +107,24 @@ export class UserplanningComponent implements OnInit {
   }
 
   loadProjects() {
-    this.projectsService.getAllProject().subscribe(
+    this.projectsService.getAllProject().pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+ 
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+       {
+ 
+        return of();
+      }
+       
+ 
+    })).subscribe(
       response => {
         for (let index = 0; index < response.length; index++) {
           const element = response[index];
@@ -131,7 +168,24 @@ export class UserplanningComponent implements OnInit {
   deleteAssignment() {
     var confirmDelete = confirm("Are you sure you want to delete this assignment ?");
     if (confirmDelete) {
-      this.planningService.deleteAssignment(this.targetAssignment).subscribe(
+      this.planningService.deleteAssignment(this.targetAssignment).pipe(catchError(error => {
+
+        console.log("wijden error");
+        console.log(error.status);
+        if  (error.status === 401 )
+            {
+   
+              this.router.navigate(["/login"]);
+              return of()
+            }
+        else
+         {
+         
+          return of();
+        }
+         
+   
+      })).subscribe(
         result => {
           location.reload();
         }
@@ -146,7 +200,24 @@ export class UserplanningComponent implements OnInit {
   }
 
   updateAssignment() {
-    this.planningService.updateAssignment(this.targetAssignment, this.newAssignment.projectId).subscribe(
+    this.planningService.updateAssignment(this.targetAssignment, this.newAssignment.projectId).pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+            console.log("Please login");
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+       {
+        console.log("System error occuried !");
+        return of();
+      }
+       
+ 
+    })).subscribe(
       result => {
         location.reload();
       }

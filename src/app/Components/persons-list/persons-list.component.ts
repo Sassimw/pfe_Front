@@ -25,6 +25,7 @@ export class PersonsListComponent implements OnInit {
   team: any; 
   teams?: any[] = [];
   TempUpdatePerson: any = {
+    id:"",
     firstname:"",
     lastname:"",
     email:""
@@ -33,6 +34,7 @@ export class PersonsListComponent implements OnInit {
     name: ""
   }
   temmUpdatebasicinfo:any = {
+    id:"",
     firstname:"",
     lastname:"",
     email:""
@@ -84,9 +86,25 @@ export class PersonsListComponent implements OnInit {
     console.log("wijden this.newAssignment.teams " + this.teamID ) ; 
   }
   public showallUsers() {
-    this.userservice.showalluser().subscribe(
-      (response: string | any[]): void => {
+    this.userservice.showalluser().pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+            this.showmessagesnackbar("Please login");
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+       {
+        this.showmessagesnackbar("System error occuried !");
+        return of();
+      }
+       
  
+    })).subscribe(
+      (response: string | any[]): void => {
         for (var i = 0; i < response.length; i++) {
           console.log (i);
           var teamnname;
@@ -117,7 +135,24 @@ export class PersonsListComponent implements OnInit {
   }
 
   public getTeambyid(id: any) {
-    this.userservice.getTeam(id).subscribe( (data : any) =>{
+    this.userservice.getTeam(id).pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+            this.showmessagesnackbar("Please login");
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+       {
+        this.showmessagesnackbar("System error occuried !");
+        return of();
+      }
+       
+ 
+    })).subscribe( (data : any) =>{
       console.log("wijden team getTeambyid" + data.name )
     }
     );
@@ -135,6 +170,7 @@ export class PersonsListComponent implements OnInit {
 
 
   initUpdateModal(person: any) {
+    this.temmUpdatebasicinfo.id = person.id;
     this.temmUpdatebasicinfo.firstname = person.firstName;
     this.temmUpdatebasicinfo.lastname = person.lastName;
     this.temmUpdatebasicinfo.email = person.email;
@@ -154,29 +190,51 @@ export class PersonsListComponent implements OnInit {
     console.log(this.TempUpdatePerson) ;
   }
 
-  confirmUpdate(id:any) {
-   this.userservice.updateUser(id,this.temmUpdatebasicinfo.firstname,this.temmUpdatebasicinfo.lastname,this.temmUpdatebasicinfo.email).pipe
-      (catchError(error => {
-        console.log(error);
-        this.showmessagesnackbar("Error when updating user. Please contact administrator");
+  confirmUpdate() {
+   this.userservice.updateUser(this.temmUpdatebasicinfo.id,this.temmUpdatebasicinfo.firstname,this.temmUpdatebasicinfo.lastname,this.temmUpdatebasicinfo.email).pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+            this.showmessagesnackbar("Please login");
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+      {
+        this.showmessagesnackbar("System error occuried !");
         return of();
-      })).subscribe(
-        response => {
-          /*this.persons?.find(x => x.id == id).email==this.temmUpdatebasicinfo.email;
-          this.persons?.find(x => x.id == id).firstName==this.temmUpdatebasicinfo.email;
-          this.persons?.find(x => x.id == id).lastName==this.temmUpdatebasicinfo.email;*/
-          this.showmessagesnackbar("User updated successfully");
-          setTimeout(() => { location.reload(); }, 2000);
-        })
+      }      
+     })).subscribe(
+          response => {
+            /*this.persons?.find(x => x.id == id).email==this.temmUpdatebasicinfo.email;
+            this.persons?.find(x => x.id == id).firstName==this.temmUpdatebasicinfo.email;
+            this.persons?.find(x => x.id == id).lastName==this.temmUpdatebasicinfo.email;*/
+            this.showmessagesnackbar("User updated successfully");
+            setTimeout(() => { location.reload(); }, 2000);
+          })
   }
 
-  ChangeTeam(idPerson:any) {
-    this.userservice.updateUserTeam(idPerson,this.teamID).pipe
-       (catchError(error => {
-         console.log(error);
-         this.showmessagesnackbar("Error when updating user. Please contact administrator");
-         return of();
-       })).subscribe(
+  ChangeTeam() {
+    this.userservice.updateUserTeam(this.temmUpdatebasicinfo.id,this.teamID).pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+            this.showmessagesnackbar("Please login");
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+       {
+        this.showmessagesnackbar("System error occuried !");
+        return of();
+      }
+       
+ 
+    })).subscribe(
          response => {
            this.showmessagesnackbar("Team changed successfully");
            setTimeout(() => { location.reload(); }, 2000);
@@ -185,12 +243,24 @@ export class PersonsListComponent implements OnInit {
 
   deleteTeam() {
 
-    this.userservice.deleteUser(this.TempDeletePerson).pipe
-      (catchError(error => {
-        console.log(error);
-        this.showmessagesnackbar("Error when deleting user. Please contact administrator");
+    this.userservice.deleteUser(this.TempDeletePerson).pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+            this.showmessagesnackbar("Please login");
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+       {
+        this.showmessagesnackbar("System error occuried !");
         return of();
-      })).subscribe(
+      }
+       
+ 
+    })).subscribe(
         response => {
           this.showmessagesnackbar("User deleted successfully");
           setTimeout(() => { location.reload(); }, 2000);
@@ -201,12 +271,24 @@ export class PersonsListComponent implements OnInit {
 
   deleteUser(){
 
-    this.userservice.deleteUser(this.TempDeletePerson).pipe
-    (catchError(error => {
-      console.log(error);
-      this.showmessagesnackbar("Error when deleting team. Please contact administrator");
-      return of();
-     })).subscribe(
+    this.userservice.deleteUser(this.TempDeletePerson).pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+            this.showmessagesnackbar("Please login");
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+       {
+        this.showmessagesnackbar("System error occuried !");
+        return of();
+      }
+       
+ 
+    })).subscribe(
     response => {
       this.showmessagesnackbar("Team deleted successfully");
       setTimeout(() => { location.reload(); }, 2000);

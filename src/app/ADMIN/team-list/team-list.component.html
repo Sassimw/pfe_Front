@@ -1,8 +1,21 @@
-<div class="addnew">
-  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#AddModal">
-    <i class="fa-solid fa-circle-plus"></i>&nbsp; Create a Team
-  </button>
-  &nbsp;&nbsp;
+
+
+<div class="row">
+  <div class="col-md-10">
+     <div class="input-group flex-nowrap">
+        <input type="text" class="form-control" aria-label="Username" aria-describedby="addon-wrapping">
+        <div class="input-group-prepend">
+           <span class="input-group-text" id="addon-wrapping"><i class="fas fa-search"></i></span>
+        </div>
+     </div>
+  </div>
+
+  <div class="addnew">
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#AddModal">
+      <i class="fa-solid fa-circle-plus"></i>&nbsp; Create a Team
+    </button>
+    &nbsp;&nbsp;
+  </div>
 </div>
 
 <div class="container">
@@ -42,15 +55,8 @@
                           <input name="teamUpdateName" [(ngModel)]="TempTeam.name" type="text" id="form6Example1"
                             class="form-control" />
                         </div>
-                        
                       </div>
-
-
                     </div>
-
-
-                    <!-- Text input -->
-
                   </form>
 
                 </div>
@@ -62,9 +68,6 @@
               </div>
             </div>
           </div>
-
-
-
 
           <!-- Modal HTML -->
           <div id="deletemodal" class="modal fade">
@@ -88,9 +91,6 @@
               </div>
             </div>
           </div>
-
-
-
 
           <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#UpdateModal"
             (click)="initUpdateModal(team)">
