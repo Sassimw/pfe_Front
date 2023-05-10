@@ -33,6 +33,16 @@ export class PlanningService {
     return this.httpclient.post(this.url + "/add?userid=" + userid + "&projectid=" + projectid + "&month=" + month + "&day=" + day, null, httpOptions);
   }
 
+  public makeNewAssignmentAndUpdateRequest(userid: any, projectid: any, month: any, day: any,requestid:any) {
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.tokenservice.gettoken().toString()
+      })
+    };
+    console.log("wijden project id " + projectid ) ;
+    return this.httpclient.post(this.url + "/addFromReq?userid=" + userid + "&projectid=" + projectid + "&month=" + month + "&day=" + day+"&reqid="+requestid, null, httpOptions);
+  }
+
   public deleteAssignment(assigbmentId: any) {
     var httpOptions = {
       headers: new HttpHeaders({
