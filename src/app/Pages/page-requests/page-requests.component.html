@@ -2,21 +2,27 @@
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>description</th>
-                <th>user</th>
-                <th>operation</th>
-                <th>Status</th>
+                <th>Requester MATCLE</th>
+                <th>Requester full name</th>
+                <th>Resource MATCLE</th>
+                <th>Resource full name</th>
+                <th>Project</th>
+                <th>Request date</th>
+                <th>Accepted</th>
+
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let request of requests">
-                <td>{{request.id}}</td>
-                <td>{{request.description}}</td>
-                <td>{{request.person.firstName + " "}} {{request.person.lastName}}</td>
-                <td>{{request.operation.name}}</td> 
-                <td>{{request.status}}</td>
-               
+                <td>{{request.req_matcle}}</td>
+                <td>{{request.req_firstname + " "}} {{request.req_lastname}}</td>
+                <td>{{request.res_matcle}}</td>
+                <td>{{request.res_firstname + " "}} {{request.res_lastname}}</td>
+                <td>{{request.project_name}}</td>
+                <td>{{request.request_date}}</td>
+                <td> <div *ngIf="!request.accepted" style="color: red;font-weight: 500;" > No  </div>
+                  <div *ngIf="request.accepted" style="color: green;font-weight: 500;" > Yes </div>
+                 </td>         
         
 
 

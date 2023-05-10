@@ -45,20 +45,14 @@ export class PersonsListComponent implements OnInit {
   constructor(private personService: PersonService, private userservice: UserService,private teamsService : TeamService, private router: Router) { }
   ngOnInit(): void {
     // this.retrieveAll();
+    console.log("wijden call persons") ;
+    console.log(this.persons) ;
     this.showallUsers();
     this.getAllTeams();
-  }
-  retrieveAll(): void {
-    this.personService.getAll()
-      .subscribe({
-        next: (data) => {
-          this.persons = data;
-          console.log(data);
-        },
-        error: (e) => console.error(e)
-      });
+    
 
   }
+
   public getAllTeams(){
     this.teamsService.showteamdetails().subscribe(
       (response: string | any[]): void => {
