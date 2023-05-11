@@ -10,6 +10,7 @@ import { FileService } from 'src/app/services/file/file.service';
 import { catchError, last } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
   selector: 'app-userplanning',
@@ -18,12 +19,18 @@ import { Router } from '@angular/router';
 })
 export class UserplanningComponent implements OnInit {
 
+  persons?: any[] = [];
   targetUserId: any = "";
   newAssignment = {
     projectId: "",
     date: ""
   }
-
+  TempUpdatePerson: any = {
+    id:"",
+    firstname:"",
+    lastname:"",
+    email:""
+  }
   tempAssignmentDate: any = "";
   targetAssignment: any = "";
   targetProject: any = "";
@@ -36,11 +43,12 @@ export class UserplanningComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth'
   };
-  constructor(private planningService: PlanningService, private projectsService: ProjectsService, private route: ActivatedRoute, private fileService: FileService, private tokenService: TokenService, private router: Router) { }
+  constructor(private planningService: PlanningService, private projectsService: ProjectsService,private userservice: UserService, private route: ActivatedRoute, private fileService: FileService, private tokenService: TokenService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadProjects();
     this.loadUserPlanning();
+    this.showallUsers();
   }
 
   loadUserPlanning() {
@@ -232,15 +240,63 @@ export class UserplanningComponent implements OnInit {
     var requestOptions = {
       headers: myHeaders
     };
-
+    this.TempUpdatePerson = this.persons?.find(x => x.id == userId);
     fetch("http://localhost:8085/planning/" + userId + "/download-planning", requestOptions)
       .then((res) => { return res.blob(); })
       .then((data) => {
         var a = document.createElement("a");
         a.href = window.URL.createObjectURL(data);
-        a.download = "planning.csv";
+        var filename ="planning_"+this.TempUpdatePerson.firstName+this.TempUpdatePerson.lastName+".csv";
+        a.download = filename;
         a.click();
       });
+  }
+
+  public showallUsers() {
+    this.userservice.showalluser().pipe(catchError(error => {
+
+      console.log("wijden error");
+      console.log(error.status);
+      if  (error.status === 401 )
+          {
+            this.router.navigate(["/login"]);
+            return of()
+          }
+      else
+       {
+        return of();
+      }
+       
+ 
+    })).subscribe(
+      (response: string | any[]): void => {
+        for (var i = 0; i < response.length; i++) {
+          console.log (i);
+          var teamnname;
+           if (response[i].team === null )
+             teamnname="No team";
+            else
+              teamnname = response[i].team.name ; 
+          var user = {
+            "id": response[i].id,
+            "email": response[i].email,
+            "matcle": response[i].matcle,
+            "firstName": response[i].firstname,
+            "lastName": response[i].lastname,
+            "speciality": response[i].speciality,
+            "nbrOfProjectsOfUser": response[i].nbrOfProjectsOfUser,
+            "globalUserScore": response[i].globalUserScore,
+            "userglobalscoreperproject": response[i].userglobalscoreperproject,
+            "numberofuserprojects": response[i].numberofuserprojects,
+            "teamname" : teamnname
+          }
+ 
+          this.persons?.push(user);
+
+        }
+ 
+      }
+    )
   }
 
 

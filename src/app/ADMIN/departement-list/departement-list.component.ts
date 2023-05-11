@@ -13,13 +13,18 @@ import { of } from 'rxjs';
 export class DepartementListComponent implements OnInit {
 
   projects?: any[] = [];
-
+ 
   name: string = "";
   budget: Number = 0 ;
   workload: Number = 0 ;
   crucuality: string ="";
   TempDeleteProject:any ;
-  TempProject:any ;
+  TempProject:any = {
+    name:"",
+    budget:"",
+    workload:"",
+    criticality:""
+  }
 
   constructor(private projectService: ProjectsService) { }
   ngOnInit(): void {
@@ -29,7 +34,10 @@ export class DepartementListComponent implements OnInit {
     this.TempDeleteProject = project;
   }
   initUpdateModal(project:any){
+    console.log("wijden");
     this.TempProject = project;
+    console.log("this.TempProject  ");
+    console.log(this.TempProject);
   }
   retrieveAll(): void {
     this.projectService.getAllProject()
@@ -101,6 +109,22 @@ export class DepartementListComponent implements OnInit {
   })).subscribe(
     response => {
       this.showmessagesnackbar("Team deleted successfully");
+      setTimeout(() => { location.reload(); }, 2000);
+      
+    })
+
+  }
+
+   modifProject(){
+
+    this.projectService.updateProject(this.TempProject.id,this.TempProject.name,this.TempProject.budget,this.TempProject.workload,this.TempProject.criticality).pipe
+    (catchError(error => {
+      console.log(error);
+      this.showmessagesnackbar("Error when deleting team. Please contact administrator");
+      return of();
+    })).subscribe(
+    response => {
+      this.showmessagesnackbar("Team modified successfully");
       setTimeout(() => { location.reload(); }, 2000);
       
     })

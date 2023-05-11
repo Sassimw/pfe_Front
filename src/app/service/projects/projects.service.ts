@@ -72,4 +72,16 @@ export class ProjectsService {
     };
     return this.httpclient.delete(this.url+"/deleteprojectid/"+project.id,httpOptions);
   }
+
+  public updateProject(id:any,name:any,budget:any,workload:any,crucuality:any):Observable<any>{
+    console.log( this.tokenservice.gettoken())
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
+      })
+    };
+    var completeurl=this.url+"/UpdateProject?projectid="+id+"&name="+name+
+    "&budget="+budget+"&workload="+workload+"&crucuality="+crucuality;
+    return this.httpclient.post(completeurl,null,httpOptions);
+  }
 }
