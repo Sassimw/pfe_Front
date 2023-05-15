@@ -23,6 +23,16 @@ export class PlanningService {
     return this.httpclient.get(this.url + "/ExportPlaningForOneUser?userid=" + id, httpOptions);
   }
 
+  public getPlanningForOneAllUser(): Observable<any> {
+    console.log(this.tokenservice.gettoken())
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.tokenservice.gettoken().toString()
+      })
+    };
+    return this.httpclient.get(this.url + "/ExportPlaning", httpOptions);
+  }
+
   public makeNewAssignment(userid: any, projectid: any, month: any, day: any) {
     var httpOptions = {
       headers: new HttpHeaders({

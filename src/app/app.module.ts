@@ -33,6 +33,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ProjectmembersComponent } from './projects/members/projectmembers/projectmembers.component';
+import { PlanningComponent } from './planning/planning.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -60,6 +61,7 @@ FullCalendarModule.registerPlugins([
     UserdetailsComponent,
     UserplanningComponent,
     ProjectmembersComponent,
+    PlanningComponent,
   ],
   imports: [
     BrowserModule,

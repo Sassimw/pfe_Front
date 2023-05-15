@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
     id: '2',
     titre: 'Planning management',
     icon: 'fa-solid fa-gears',
-    url: ''
+    url: 'planning'
   },
   {
     id: '3',

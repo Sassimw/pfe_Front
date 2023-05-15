@@ -73,6 +73,7 @@ export class UserplanningComponent implements OnInit {
  
     })).subscribe(
       planning => {
+        console.log("planning : ");
         console.log(planning);
         for (var i = 0; i < planning.assignments.length; i++) {
           var p = planning.assignments[i];
