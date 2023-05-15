@@ -6,7 +6,7 @@ import { PlanningService } from 'src/app/service/planning/planning.service';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from '../service/user/user.service';
-
+import { TokenService } from 'src/app/service/token/token.service';
 
 
 @Component({
@@ -31,7 +31,7 @@ export class PlanningComponent implements OnInit {
   targetAssignment: any = "";
   targetUser: any="";
 
-  constructor(private planningService: PlanningService,private projectsService: ProjectsService,private usersService: UserService,private router: Router) { }
+  constructor(private planningService: PlanningService,private projectsService: ProjectsService,private usersService: UserService,private router: Router , private tokenService: TokenService) { }
 
 
   calendarOptions: CalendarOptions = {
@@ -203,7 +203,22 @@ export class PlanningComponent implements OnInit {
     )
   }
 
-
+  downloadFile() {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", 'Bearer ' + this.tokenService.gettoken().toString());
+    var requestOptions = {
+      headers: myHeaders
+    };
+    fetch("http://localhost:8085/planning/download-planning", requestOptions)
+      .then((res) => { return res.blob(); })
+      .then((data) => {
+        var a = document.createElement("a");
+        a.href = window.URL.createObjectURL(data);
+        var filename ="planning.csv";
+        a.download = filename;
+        a.click();
+      });
+  }
   updateAssignment() {
     this.planningService.updateAssignment(this.targetAssignment, this.newAssignment.projectId).pipe(catchError(error => {
 
