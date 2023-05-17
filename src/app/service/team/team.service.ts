@@ -31,14 +31,24 @@ export class TeamService {
     return this.httpclient.get(this.url+"/viewallteams",httpOptions);
   }
 
-  public updateTeam(team:any):Observable<any>{
+  public updateTeam(id:any ,name:any):Observable<any>{
     console.log( this.tokenservice.gettoken())
     var httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
       })
     };
-    return this.httpclient.put(this.url+"/updateteamid",team,httpOptions);
+    return this.httpclient.post(this.url+"/Updatename?teamid="+id+"&name="+name,null,httpOptions);
+  }
+
+  public updateManager(id:any ,userid:any):Observable<any>{
+    console.log( this.tokenservice.gettoken())
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
+      })
+    };
+    return this.httpclient.post(this.url+"/Updatemanager?teamid="+id+"&userid="+userid,null,httpOptions);
   }
 
   public deleteTeam(team:any):Observable<any>{
