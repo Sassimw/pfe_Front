@@ -35,20 +35,20 @@ margin-top: 2%;">
 
     <div class="mb-3">
         <span>Speciality</span>
-        <input type="text" name="speciality" [value]="user.speciality" class="form-control" placeholder="E-mail"
+        <input type="text" name="speciality" [value]="user.speciality" class="form-control" placeholder="Speciality"
             disabled>
     </div>
 
     
     <div class="mb-3">
         <span>Team</span>
-        <input type="text" name="team" [value]="user.team.name" class="form-control" placeholder="E-mail"
+        <input type="text" name="team" [value]="user.team.name" class="form-control" placeholder="Team"
             disabled>
     </div>
 
     <div class="mb-3">
         <span>Hierarchical manager</span>
-        <input type="text" name="team" [value]="manager.firstname + ' ' + manager.lastname" class="form-control" placeholder="E-mail"
+        <input type="text" name="team" [value]="user.team.manager.firstname + ' ' + user.team.manager.lastname" class="form-control" placeholder="Manager"
             disabled>
     </div>
 
@@ -58,13 +58,13 @@ margin-top: 2%;">
         <div class="col-md-6">
             <span>Number of projects</span>
             <input type="text" name="nbrOfProjectsOfUser" [value]="user.nbrOfProjectsOfUser" class="form-control"
-                placeholder="E-mail" disabled>
+                placeholder="0" disabled>
         </div>
 
         <div class="col-md-6">
             <span>Score (global)</span>
             <input type="text" name="globalUserScore" [value]="user.globalUserScore" class="form-control"
-                placeholder="E-mail" disabled>
+                placeholder="0" disabled>
         </div>
 
     </div>
