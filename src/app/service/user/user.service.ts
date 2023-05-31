@@ -79,5 +79,14 @@ export class UserService {
     return this.httpclient.delete(this.url+"/deleteuser/"+user.id,httpOptions);
   }
 
+
+  public getConnectedUser():Observable<any>{
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
+      })
+    };
+    return this.httpclient.get(this.url+"/Connected",httpOptions);
+  }
 }
 

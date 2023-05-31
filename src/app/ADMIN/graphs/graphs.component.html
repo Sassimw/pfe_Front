@@ -1,66 +1,52 @@
-<table class="table" *ngIf=" collabROle === 'SUPERADMIN' ">
-  <tr>
-    <td>
-      <div class="hello" style="display: block;">
-        <h2> Nombre des Demandes par mois </h2>
-        <canvas baseChart width="400" height="400" [type]="'line'" [data]="lineChartData" [options]="lineChartOptions"
-          [legend]="lineChartLegend">
-        </canvas>
-      </div>
-    </td>
-    <td>
-      <div class="test" style="display: block;">
-        <h2> Nombre des Demandes par equipe </h2>
-        <canvas #pieCanvas></canvas>
-        <hr>
-      </div>
-    </td>
-  </tr>
+
+
+<div class="container">
+
+<table >
+    
+        <tr>
+          <td>
+            <div class="hello" style="display: block;">
+              <h2> Nombre des Demandes par mois </h2>
+              <!--<canvas baseChart width="400" height="400" [type]="'line'" [data]="lineChartData" [options]="lineChartOptions"
+                [legend]="lineChartLegend">
+              </canvas>-->
+              <iframe src="http://localhost:3000/d-solo/c9db0f50-6f6f-42ba-aae3-997f9bf1c05a/assigments?orgId=1&from=1672570038000&to=1701434307000&theme=light&panelId=1"
+                width="450" height="200" frameborder="0"></iframe>
+            </div>
+          </td>
+          <td>
+            <div class="hello" style="display: block;">
+              <h2> Nombre des Demandes par projet </h2>
+              <!-- <canvas #pieCanvas></canvas> -->
+              <iframe src="http://localhost:3000/d-solo/c9db0f50-6f6f-42ba-aae3-997f9bf1c05a/assigments?orgId=1&from=1672570038000&to=1701434307000&theme=light&panelId=2"
+              width="450" height="200" frameborder="0"></iframe>
+
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="hello" style="display: block;">
+              <h2> Nombre des Demandes par mois </h2>
+              <!--<canvas baseChart width="400" height="400" [type]="'line'" [data]="lineChartData" [options]="lineChartOptions"
+                [legend]="lineChartLegend">
+              </canvas>-->
+              <iframe src="http://localhost:3000/d-solo/c9db0f50-6f6f-42ba-aae3-997f9bf1c05a/assigments?orgId=1&from=1672570038000&to=1701434307000&theme=light&panelId=1"
+                width="450" height="200" frameborder="0"></iframe>
+            </div>
+          </td>
+          <td>
+            <div class="hello" style="display: block;">
+              <h2> Nombre des Demandes par projet </h2>
+              <!-- <canvas #pieCanvas></canvas> -->
+              <iframe src="http://localhost:3000/d-solo/c9db0f50-6f6f-42ba-aae3-997f9bf1c05a/assigments?orgId=1&from=1672570038000&to=1701434307000&theme=light&panelId=2"
+              width="450" height="200" frameborder="0"></iframe>
+
+            </div>
+          </td>
+        </tr>
+     
 </table>
-
-<div *ngIf=" collabROle === 'CHEFPROJET' " >
-  <iframe
-    src="http://localhost:3000/d-solo/ktMs4D6Mk/ourstaffing?orgId=1&from=1667727580967&to=1667749180967&panelId=25"
-    width="450" height="200" frameborder="0" style="margin-left: 30%;"></iframe>
-
-  <iframe
-    src="http://localhost:3000/d-solo/ktMs4D6Mk/ourstaffing?orgId=1&from=1667726900489&to=1667748500489&panelId=15"
-    width="450" height="200" frameborder="0" style="    width: 98%;height: 15rem;"></iframe>
-  <br />
-  <iframe
-    src="http://localhost:3000/d-solo/ktMs4D6Mk/ourstaffing?orgId=1&from=1667726609860&to=1667748209860&panelId=21"
-    width="450" height="200" frameborder="0" style="height: 26rem;"></iframe>
-
-  <table style="display: inline-block;
-margin-bottom: 3rem;
-margin-left: 8rem;">
-    <tr>
-      <td>
-        <iframe class="square-graph-frame"
-          src="http://localhost:3000/d-solo/ktMs4D6Mk/ourstaffing?orgId=1&from=1667727056209&to=1667748656209&panelId=23"
-          width="450" height="200" frameborder="0"></iframe>
-      </td>
-      <td>
-        <iframe class="square-graph-frame"
-          src="http://localhost:3000/d-solo/ktMs4D6Mk/ourstaffing?orgId=1&from=1667727090988&to=1667748690988&panelId=24"
-          width="450" height="200" frameborder="0"></iframe>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <iframe class="square-graph-frame"
-          src="http://localhost:3000/d-solo/ktMs4D6Mk/ourstaffing?orgId=1&from=1667727101828&to=1667748701828&panelId=26"
-          width="450" height="200" frameborder="0"></iframe>
-      </td>
-      <td>
-        <iframe class="square-graph-frame"
-          src="http://localhost:3000/d-solo/ktMs4D6Mk/ourstaffing?orgId=1&from=1667727112506&to=1667748712507&panelId=27"
-          width="450" height="200" frameborder="0"></iframe>
-      </td>
-    </tr>
-  </table>
-
-  <iframe style="width: 98%;height: 15rem;"
-    src="http://localhost:3000/d-solo/ktMs4D6Mk/ourstaffing?orgId=1&from=1667680547360&to=1667702147360&panelId=29"
-    width="450" height="200" frameborder="0"></iframe>
 </div>

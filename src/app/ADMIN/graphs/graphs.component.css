@@ -15,8 +15,10 @@
   align-items: center;
 }
 
-.container {
-  display: flex;
+.container{
+  margin-top: 5%;
+  margin-left: -4%;
+  width: 100%;
 }
 
 .item {
