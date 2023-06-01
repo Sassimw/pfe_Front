@@ -14,6 +14,7 @@ import { TeammembersComponent } from './team/teammembers/teammembers.component';
 import { UserplanningComponent } from './User/planning/userplanning/userplanning.component';
 import { UserdetailsComponent } from './User/userdetails/userdetails/userdetails.component';
 import { PlanningComponent } from './planning/planning.component';
+import { EditprofileComponent } from './editprofile/editprofile.component';
 
 const routes: Routes = [
   {
@@ -69,6 +70,10 @@ const routes: Routes = [
         {
           path: 'planning',
           component: PlanningComponent
+        },
+        {
+          path: 'editprofile',
+          component: EditprofileComponent
         }
 
       ]

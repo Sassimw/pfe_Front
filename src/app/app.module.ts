@@ -34,6 +34,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ProjectmembersComponent } from './projects/members/projectmembers/projectmembers.component';
 import { PlanningComponent } from './planning/planning.component';
+import { EditprofileComponent } from './editprofile/editprofile.component';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -62,6 +63,7 @@ FullCalendarModule.registerPlugins([
     UserplanningComponent,
     ProjectmembersComponent,
     PlanningComponent,
+    EditprofileComponent,
   ],
   imports: [
     BrowserModule,

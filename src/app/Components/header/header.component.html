@@ -18,8 +18,27 @@
    <div class="col-md-2">
    
    </div>
+
    <div class="col-md-2">
-      <p (click)="logout()" style="padding: 3%;
+      <div class="btn-group dropend">
+         <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Bonjour {{user.firstname}} {{user.lastname}}
+         </button>
+         <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/editprofile">  Edit Profile</a></li>
+           <li><hr class="dropdown-divider"></li>
+           <li><a class="dropdown-item" (click)="logout()" href="" ><i class="fa fa-sign-out"></i>
+            <span> Logout</span></a></li>
+         </ul>
+       </div>
+      
+         
+   </div>
+
+</div>
+
+
+<!--  <p (click)="logout()" style="padding: 3%;
       border-radius: 32px;
       text-align: center;
       background: #dee2e6;
@@ -28,16 +47,4 @@
          <button type="button" class="btn btn-default btn-sm" >
             <span class="glyphicon glyphicon-log-out"></span> Logout
          </button>
-      </p>
-   </div>
-
-</div>
-
-
-
-<div>
-     <b> Bonjour {{user.firstname}} {{user.lastname}} </b>
-</div>
-      
-
-   
+      </p> -->
