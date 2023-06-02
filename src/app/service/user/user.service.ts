@@ -36,6 +36,18 @@ export class UserService {
     return this.httpclient.post(completeurl,null,httpOptions);
   }
 
+  public updateUserAndPassword(id:any,firstname:any,lastname:any,email:any,password:any):Observable<any>{
+    console.log( this.tokenservice.gettoken())
+    var httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer '+this.tokenservice.gettoken().toString()
+      })
+    };
+    var completeurl=this.url+"/UpdateUserAndPassword?userid="+id+"&firstname="+firstname+
+    "&lastname="+lastname+"&email="+email+"&Password="+password;
+    return this.httpclient.post(completeurl,null,httpOptions);
+  }
+
 
 
   public loadUserDetails(userId:any):Observable<any>{

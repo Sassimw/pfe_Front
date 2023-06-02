@@ -17,14 +17,14 @@
                             <div class="row">
                               <div class="col">
                                 <div class="form-group">
-                                  <label>Full Name</label>
-                                  <input class="form-control" type="text" name="name" placeholder="John Smith" value="John Smith">
+                                  <label>First Name</label>
+                                  <input class="form-control" type="text" name="firstname" placeholder="First Name" [(ngModel)]="user.firstname">
                                 </div>
                               </div>
                               <div class="col">
                                 <div class="form-group">
-                                  <label>Username</label>
-                                  <input class="form-control" type="text" name="username" placeholder="johnny.s" value="johnny.s">
+                                  <label>Last Name</label>
+                                  <input class="form-control" type="text" name="lastname" placeholder="Last Name" [(ngModel)]="user.lastname">
                                 </div>
                               </div>
                             </div>
@@ -32,7 +32,22 @@
                               <div class="col">
                                 <div class="form-group">
                                   <label>Email</label>
-                                  <input class="form-control" type="text" placeholder="user@example.com">
+                                  <input class="form-control" type="text" name="email"  [(ngModel)]="user.email" >
+                                </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Matricule</label>
+                                  <input class="form-control" type="text" name="matricule" placeholder="Matricule" value="{{user.matcle}}" disabled>
+                                </div>
+                              </div>
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Team</label>
+                                  <input class="form-control" type="text" name="Team" placeholder="Team" value="{{user.team.name}}" disabled>
                                 </div>
                               </div>
                             </div>
@@ -48,7 +63,7 @@
                               <div class="col">
                                 <div class="form-group">
                                   <label>New Password</label>
-                                  <input class="form-control" type="password" placeholder="••••••">
+                                  <input class="form-control" type="text" name="password" placeholder="••••••"  [(ngModel)]="password">
                                 </div>
                               </div>
                             </div>
@@ -56,14 +71,14 @@
                               <div class="col">
                                 <div class="form-group">
                                   <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                                  <input class="form-control" type="password" placeholder="••••••"></div>
+                                  <input class="form-control" type="text" name="passwordConfirmation" placeholder="••••••"  [(ngModel)]="passwordConfirmation"></div>
                               </div>
                             </div>
                           </div>
                         </div>
                         <div class="row">
                           <div class="col d-flex justify-content-end">
-                            <button class="btn btn-primary" type="submit">Save Changes</button>
+                            <button class="btn btn-primary" type="submit" (click)="confirmUpdate()">Save Changes</button>
                           </div>
                         </div>
                       </form>
@@ -79,3 +94,5 @@
       </div>
     </div>
     </div>
+
+    <div id="snackbar">{{message}}</div>
